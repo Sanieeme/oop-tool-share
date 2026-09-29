@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ToolShare</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; color: #1a1a1a; }
+  h1 { margin-bottom: 4px; }
+  .tool { border: 1px solid #ddd; border-radius: 8px; padding: 12px 16px; margin: 10px 0; }
+  .tool .category { color: #12744e; font-weight: 600; font-size: 0.85em; text-transform: uppercase; }
+  .tool .meta { color: #555; font-size: 0.9em; }
+  #status { color: #a00; }
+</style>
+</head>
+<body>
+<h1>ToolShare</h1>
+<p>Tools currently in the catalogue:</p>
+<div id="status"></div>
+<ul id="tool-list"></ul>
+
+<script>
+  // TODO (Q8.4): call the tools endpoint (GET) and render each tool into
+  // #tool-list, e.g. one <li> per tool showing its name, category, deposit
+  // and maxLoanDays. On failure, show a short message in #status instead of
+  // leaving the page blank. See the README for the exact endpoint path.
+</script>
+</body>
+</html>

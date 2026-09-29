@@ -1,0 +1,26 @@
+image: maven:3.9-eclipse-temurin-17
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+before_script:
+  - apt-get update -qq && apt-get install -y -qq make
+
+# TODO (Q1.2): define the stages for this pipeline, in order, then add a job
+# for every stage other than `compile` (provided below as a worked example).
+#
+# Requirements:
+#   1. Stages run compile -> test -> package.
+#   2. Every job shares a cache of the Maven repository (.m2/repository)
+#      so dependencies are not re-downloaded by every job.
+#   3. The `test` job runs `make test`, and publishes the Surefire XML
+#      reports (target/surefire-reports/TEST-*.xml) as a JUnit report
+#      that is kept EVEN WHEN THE TESTS FAIL.
+#   4. The `package` job runs `make package`, keeps target/toolshare.jar as
+#      an artifact that expires after one week, and only runs on the
+#      project's default branch.
+
+compile:
+  stage: compile
+  script:
+    - make compile

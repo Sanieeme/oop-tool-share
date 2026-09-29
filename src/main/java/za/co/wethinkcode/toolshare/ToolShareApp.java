@@ -16,7 +16,7 @@ public class ToolShareApp {
     /** Builds the application. The caller decides when and on which port to start it. */
     public Javalin create() {
         Javalin app = Javalin.create(config ->
-                config.staticFiles.add("/public", Location.CLASSPATH));
+                config.addStaticFiles("/public", Location.CLASSPATH));
 
         app.get("/health", ctx -> ctx.result("OK"));
 

@@ -21,6 +21,11 @@
 
     <dependencies>
         <!-- TODO (Q1.1): the web framework this application is written against is missing here. -->
+        <dependency>
+            <groupId>io.javalin</groupId>
+            <artifactId>javalin</artifactId>
+            <version>4.6.4</version>
+        </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

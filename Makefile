@@ -17,3 +17,8 @@ clean:
 # Usage: make release VERSION=1.2.3
 release:
 	./scripts/release.sh $(VERSION)
+
+stages:
+   - compile
+   - test
+   - package

@@ -19,8 +19,22 @@ before_script:
 #   4. The `package` job runs `make package`, keeps target/toolshare.jar as
 #      an artifact that expires after one week, and only runs on the
 #      project's default branch.
+test:
+  stage: test
+  script:
+    - make test
 
 compile:
   stage: compile
   script:
     - make compile
+
+package:
+  stage: package
+  script:
+    - make package
+
+stages:
+  - compile
+  - test
+  - package

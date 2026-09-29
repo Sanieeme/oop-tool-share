@@ -18,7 +18,4 @@ clean:
 release:
 	./scripts/release.sh $(VERSION)
 
-stages:
-   - compile
-   - test
-   - package
+

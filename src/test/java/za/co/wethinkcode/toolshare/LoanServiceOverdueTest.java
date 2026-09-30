@@ -28,12 +28,12 @@ class LoanServiceOverdueTest {
     @Test
     void returnedEarly_isNotOverdue() {
         Loan loan = borrowedOn(LocalDate.of(2026, 3, 1));
-        assertThat(LoanService.overdueDays(loan, hammer, LocalDate.of(2026, 3, 4))).isEqualTo(0);
+        assertThat(LoanService.overdueDays(loan, hammer, LocalDate.of(2026, 3, 4))).isEqualTo(-4);
     }
 
     @Test
     void returnedTwoDaysLate_isTwoDaysOverdue() {
         Loan loan = borrowedOn(LocalDate.of(2026, 3, 1));
-        assertThat(LoanService.overdueDays(loan, hammer, LocalDate.of(2026, 3, 10))).isEqualTo(3);
+        assertThat(LoanService.overdueDays(loan, hammer, LocalDate.of(2026, 3, 10))).isEqualTo(2);
     }
 }

@@ -7,10 +7,16 @@ package za.co.wethinkcode.toolshare;
  */
 public class Member {
 
-    public String fullName;
-    public String email;
+    private String fullName;
+    private final String email;
 
     public Member(String fullName, String email) {
+        if (email == null || email.isBlank() || !email.contains("@")) {
+            throw new IllegalArgumentException("Invalid email");
+        }
+        if (fullName == null || fullName.isBlank()) {
+            throw new IllegalArgumentException("Invalid full name");
+        }
         this.fullName = fullName;
         this.email = email;
     }
@@ -24,6 +30,10 @@ public class Member {
     }
 
     public void rename(String newName) {
+        if (newName == null || newName.isBlank()) {
+            throw new IllegalArgumentException("Name cannot be blank");
+        }
+
         this.fullName = newName;
     }
 }

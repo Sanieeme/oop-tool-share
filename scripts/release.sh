@@ -21,3 +21,45 @@
 #      dist/toolshare-<version>.jar.sha256
 #   8. Print the path of the released jar as the LAST line of output.
 #
+
+# Self-check for the argument handling in release.sh (Q1.3, requirements 2 and 3).
+# It does NOT run a real release. Usage: ./scripts/check_release.sh
+# Check that exactly one argument was provided
+if [ "$#" -ne 1 ]; then
+    echo "Usage: ./scripts/release.sh <version>" >&2
+    exit 2
+fi
+
+version="$1"
+
+# Check that version is MAJOR.MINOR.PATCH
+if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    echo "Error: version must be MAJOR.MINOR.PATCH" >&2
+    exit 1
+fi
+
+# Check that the working tree is clean
+if [ -n "$(git status --porcelain)" ]; then
+    echo "Error: working tree is not clean" >&2
+    exit 1
+fi
+
+# Run tests
+make test
+
+# Package the application
+make package
+
+# Create dist directory
+mkdir -p dist
+
+# Copy the JAR
+cp target/toolshare.jar "dist/toolshare-$version.jar"
+
+# Create SHA-256 checksum
+sha256sum "dist/toolshare-$version.jar" > "dist/toolshare-$version.jar.sha256"
+
+# Print the released JAR path as the last line
+echo "dist/toolshare-$version.jar"
+
+

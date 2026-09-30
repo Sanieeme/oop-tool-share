@@ -2,12 +2,14 @@ DO NOT CHANGE THE FORMAT -- DO NOT CREATE A NEW txt file
 
 === Question 1.4 (2 marks) ===
 #New version:
+New version: 2.1.1
 #Reason below
-
+This is a patch release because the change fixes a bug without adding new functionality or changing any public method signatures. The major (2) and minor (1) versions therefore remain unchanged.
 
 === Question 3.2 (2 marks) ===
 #Answer below
-
+i would add this part r = r + 3; inside an if statement and then remove the
+one that is outside.
 
 === Question 4.2 (5 marks) ===
 #Which test was wrong, and why:
@@ -15,26 +17,59 @@ DO NOT CHANGE THE FORMAT -- DO NOT CREATE A NEW txt file
 
 === Question 5.1 (4 marks) ===
 #User story:
-
+As a borrower, I want to extend the return date of my loan so that I can keep the tool for longer when I still need it.
 #Acceptance criteria:
+Valid extension: Given that I have an active loan, when I request an extension, then the loan's due date is extended by the allowed extension period.
+Maximum extension: Given that my loan has already reached the maximum allowed extension, when I request another extension, then the system rejects the request and keeps the original due date.
+Updated due date: Given that my extension request is successful, when I view my loan, then the new due date is displayed.
 
 
 === Question 5.2 (3 marks) ===
 #Answer below
 
+I would split the story into smaller stories so that the completed part can still provide a usable feature.
+
+Story 1 — Request an extension:
+As a borrower, I want to request a loan extension so that I can keep the tool longer when needed.
+
+This can be shipped if the borrower can successfully request an extension and the new due date is recorded.
+
+Story 2 — Staff decision:
+As a staff member, I want to approve or decline extension requests so that I can control whether extensions are granted.
+
+The unfinished decline functionality would be moved to the next sprint rather than holding back the completed borrower functionality.
+
+This gives the team a usable increment while making the remaining work explicit rather than pretending the original story is completely finished.
 
 === Question 5.3 (3 marks) ===
 #Answer below
 
+I would raise that the same dependency problem happened twice, causing developers to independently spend about 30 minutes solving the same issue.
+I would propose a concrete action such as:
+Create a short project setup/troubleshooting guide documenting the dependency and its fix, and add it to the project README.
+I would also suggest that the team briefly share the fix during the next stand-up or team session.
+A retrospective is the right place because the problem is a team/process issue, not just a problem with one developer's code. The goal of the retro is to identify repeated problems and agree on an improvement to prevent them happening again. A code-review comment would only help the particular piece of code being reviewed and would not address the wider team process.
 
 === Question 6.1 (4 marks) ===
 #Answer below
 
+Using the LoanRepository interface means LoanService does not need to know how loans are actually stored.
+
+In Section 4, the tests could use InMemoryLoanRepository instead of a real database, allowing LoanService to be tested quickly and without setting up SQLite. The service can be tested using the same repository interface while keeping database details out of the tests.
+
+If ToolShare later adds SqliteLoanRepository, we would create a new class that implements LoanRepository. LoanService would not need to change because it already depends on the interface; only the repository implementation supplied to it would change.
 
 === Question 6.2 (3 marks) ===
 #Answer below
 
+404 Not Found: 404 is appropriate when the requested tool does not exist because the resource being requested cannot be found, rather than the request itself being malformed.
+409 Conflict: 409 is appropriate when the request is valid but conflicts with the current state of the system, such as the tool already being on loan or the member reaching their loan limit.
+400 Bad Request: 400 is appropriate when the client sends an invalid request, such as malformed JSON or a request missing a required field.
+
+Using different status codes helps the client understand why the request failed instead of treating every failure as the same problem.
 
 === Question 6.3 (3 marks) ===
 #Answer below
 
+The main problem is that a single SQLite database file is not a good fit for ten branches simultaneously accessing and updating the same live data. Multiple branches would need reliable concurrent access to the same catalogue and loan records.
+One reasonable solution would be to move the database to a central server-based relational database, such as PostgreSQL. The branches would communicate with the ToolShare backend/API, which would access the central database. This would allow all branches to work with the same data while the application handles concurrent requests.
